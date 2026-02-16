@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Form Validation</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        form {
+            background-color: #2d2d2d;
+            padding: 25px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 8px;
+            background-color: #3a3a3a;
+            border: 1px solid #555;
+            border-radius: 3px;
+            color: #e0e0e0;
+            box-sizing: border-box;
+        }
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .checkbox-group,
+        .radio-group {
+            margin-left: 5px;
+        }
+        .checkbox-group label,
+        .radio-group label {
+            display: inline-block;
+            margin-right: 15px;
+            margin-top: 5px;
+            font-weight: normal;
+        }
+        .error {
+            color: #ff6b6b;
+            font-size: 13px;
+            margin-top: 3px;
+        }
+        .success {
+            color: #51cf66;
+            font-size: 13px;
+            margin-top: 3px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 25px;
+            background-color: #4a9eff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        button:hover {
+            background-color: #3a7fd5;
+        }
+        .password-strength {
+            margin-top: 5px;
+            font-size: 13px;
+        }
+        .weak {
+            color: #ff6b6b;
+        }
+        .medium {
+            color: #ffd93d;
+        }
+        .strong {
+            color: #51cf66;
+        }
+    </style>
+</head>
+<body>
+    <h1>Form Validation Exercises</h1>
+
+    <h2>Question 1: Employee Registration</h2>
+    <form id="employeeForm" onsubmit="return validateEmployeeForm()">
+        <label>Employee Name</label>
+        <input type="text" id="empName">
+        <div id="empNameError" class="error"></div>
+
+        <label>Email</label>
+        <input type="email" id="email">
+        <div id="emailError" class="error"></div>
+
+        <label>Password</label>
+        <input type="password" id="password" onkeyup="checkPasswordStrength()">
+        <div id="passwordStrength" class="password-strength"></div>
+        <div id="passwordError" class="error"></div>
+
+        <label>Mobile Number</label>
+        <input type="text" id="mobile">
+        <div id="mobileError" class="error"></div>
+
+        <label>Gender</label>
+        <div class="radio-group">
+            <label><input type="radio" name="gender" value="Male"> Male</label>
+            <label><input type="radio" name="gender" value="Female"> Female</label>
+            <label><input type="radio" name="gender" value="Other"> Other</label>
+        </div>
+        <div id="genderError" class="error"></div>
+
+        <label>Department</label>
+        <select id="department">
+            <option value="">Select Department</option>
+            <option value="IT">IT</option>
+            <option value="HR">HR</option>
+            <option value="Finance">Finance</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Operations">Operations</option>
+        </select>
+        <div id="departmentError" class="error"></div>
+
+        <label>Skills</label>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="skills" value="HTML"> HTML</label>
+            <label><input type="checkbox" name="skills" value="CSS"> CSS</label>
+            <label><input type="checkbox" name="skills" value="JavaScript"> JavaScript</label>
+            <label><input type="checkbox" name="skills" value="Python"> Python</label>
+            <label><input type="checkbox" name="skills" value="Java"> Java</label>
+        </div>
+        <div id="skillsError" class="error"></div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Question 2: Address Validation</h2>
+    <form id="addressForm" onsubmit="return validateAddressForm()">
+        <label>House / Door Number</label>
+        <input type="text" id="houseNo">
+        <div id="houseNoError" class="error"></div>
+
+        <label>Street Name</label>
+        <input type="text" id="street">
+        <div id="streetError" class="error"></div>
+
+        <label>Area / Locality</label>
+        <input type="text" id="area">
+        <div id="areaError" class="error"></div>
+
+        <label>City</label>
+        <select id="city">
+            <option value="">Select City</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Kolkata">Kolkata</option>
+        </select>
+        <div id="cityError" class="error"></div>
+
+        <label>State</label>
+        <select id="state">
+            <option value="">Select State</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="West Bengal">West Bengal</option>
+        </select>
+        <div id="stateError" class="error"></div>
+
+        <label>Country</label>
+        <select id="country">
+            <option value="">Select Country</option>
+            <option value="India">India</option>
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+            <option value="Australia">Australia</option>
+        </select>
+        <div id="countryError" class="error"></div>
+
+        <label>Pincode</label>
+        <input type="text" id="pincode">
+        <div id="pincodeError" class="error"></div>
+
+        <label>Landmark (Optional)</label>
+        <input type="text" id="landmark">
+        <div id="landmarkError" class="error"></div>
+
+        <label>Address Type</label>
+        <div class="radio-group">
+            <label><input type="radio" name="addressType" value="Residential"> Residential</label>
+            <label><input type="radio" name="addressType" value="Office"> Office</label>
+            <label><input type="radio" name="addressType" value="Other"> Other</label>
+        </div>
+        <div id="addressTypeError" class="error"></div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function clearErrors(formId) {
+            var errorDivs = document.querySelectorAll('#' + formId + ' .error, #' + formId + ' .success');
+            for (var i = 0; i < errorDivs.length; i++) {
+                errorDivs[i].textContent = '';
+            }
+        }
+
+        function validateEmployeeForm() {
+            clearErrors('employeeForm');
+            var isValid = true;
+
+            var empName = document.getElementById('empName').value.trim();
+            if (empName === '') {
+                document.getElementById('empNameError').textContent = 'Employee Name is required';
+                isValid = false;
+            } else if (!/^[A-Za-z\s]+$/.test(empName)) {
+                document.getElementById('empNameError').textContent = 'Only alphabets allowed';
+                isValid = false;
+            } else if (empName.length < 3) {
+                document.getElementById('empNameError').textContent = 'Minimum 3 characters required';
+                isValid = false;
+            }
+
+            var email = document.getElementById('email').value.trim();
+            if (email === '') {
+                document.getElementById('emailError').textContent = 'Email is required';
+                isValid = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById('emailError').textContent = 'Invalid email format';
+                isValid = false;
+            }
+
+            var password = document.getElementById('password').value;
+            if (password === '') {
+                document.getElementById('passwordError').textContent = 'Password is required';
+                isValid = false;
+            }
+
+            var mobile = document.getElementById('mobile').value.trim();
+            if (mobile === '') {
+                document.getElementById('mobileError').textContent = 'Mobile Number is required';
+                isValid = false;
+            } else if (!/^\d{10}$/.test(mobile)) {
+                document.getElementById('mobileError').textContent = 'Must be exactly 10 digits';
+                isValid = false;
+            }
+
+            var gender = document.querySelector('input[name="gender"]:checked');
+            if (!gender) {
+                document.getElementById('genderError').textContent = 'Gender selection is mandatory';
+                isValid = false;
+            }
+
+            var department = document.getElementById('department').value;
+            if (department === '') {
+                document.getElementById('departmentError').textContent = 'Please select a department';
+                isValid = false;
+            }
+
+            var skills = document.querySelectorAll('input[name="skills"]:checked');
+            if (skills.length === 0) {
+                document.getElementById('skillsError').textContent = 'Select at least one skill';
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert('Employee Form submitted successfully!');
+            }
+            return false;
+        }
+
+        function checkPasswordStrength() {
+            var password = document.getElementById('password').value;
+            var strengthDiv = document.getElementById('passwordStrength');
+
+            if (password.length === 0) {
+                strengthDiv.textContent = '';
+                return;
+            }
+
+            if (password.length < 6) {
+                strengthDiv.textContent = 'Weak';
+                strengthDiv.className = 'password-strength weak';
+            } else if (/[A-Z]/.test(password) && /[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+                strengthDiv.textContent = 'Strong';
+                strengthDiv.className = 'password-strength strong';
+            } else if (/[A-Za-z]/.test(password) && /\d/.test(password)) {
+                strengthDiv.textContent = 'Medium';
+                strengthDiv.className = 'password-strength medium';
+            } else {
+                strengthDiv.textContent = 'Weak';
+                strengthDiv.className = 'password-strength weak';
+            }
+        }
+
+        function validateAddressForm() {
+            clearErrors('addressForm');
+            var isValid = true;
+
+            var houseNo = document.getElementById('houseNo').value.trim();
+            if (houseNo === '') {
+                document.getElementById('houseNoError').textContent = 'House/Door Number is required';
+                isValid = false;
+            } else if (!/^[A-Za-z0-9\/\-]+$/.test(houseNo)) {
+                document.getElementById('houseNoError').textContent = 'Only alphabets, numbers, / and - allowed';
+                isValid = false;
+            } else if (houseNo.length > 10) {
+                document.getElementById('houseNoError').textContent = 'Maximum 10 characters allowed';
+                isValid = false;
+            }
+
+            var street = document.getElementById('street').value.trim();
+            if (street === '') {
+                document.getElementById('streetError').textContent = 'Street Name is required';
+                isValid = false;
+            } else if (!/^[A-Za-z\s]+$/.test(street)) {
+                document.getElementById('streetError').textContent = 'Only alphabets and spaces allowed';
+                isValid = false;
+            } else if (street.length < 3) {
+                document.getElementById('streetError').textContent = 'Minimum 3 characters required';
+                isValid = false;
+            } else if (street.length > 50) {
+                document.getElementById('streetError').textContent = 'Maximum 50 characters allowed';
+                isValid = false;
+            }
+
+            var area = document.getElementById('area').value.trim();
+            if (area === '') {
+                document.getElementById('areaError').textContent = 'Area/Locality is required';
+                isValid = false;
+            } else if (!/^[A-Za-z\s]+$/.test(area)) {
+                document.getElementById('areaError').textContent = 'Only alphabets and spaces allowed';
+                isValid = false;
+            } else if (area.length < 3) {
+                document.getElementById('areaError').textContent = 'Minimum 3 characters required';
+                isValid = false;
+            } else if (area.length > 50) {
+                document.getElementById('areaError').textContent = 'Maximum 50 characters allowed';
+                isValid = false;
+            }
+
+            var city = document.getElementById('city').value;
+            if (city === '') {
+                document.getElementById('cityError').textContent = 'Please select a city';
+                isValid = false;
+            }
+
+            var state = document.getElementById('state').value;
+            if (state === '') {
+                document.getElementById('stateError').textContent = 'Please select a state';
+                isValid = false;
+            }
+
+            var country = document.getElementById('country').value;
+            if (country === '') {
+                document.getElementById('countryError').textContent = 'Please select a country';
+                isValid = false;
+            }
+
+            var pincode = document.getElementById('pincode').value.trim();
+            if (pincode === '') {
+                document.getElementById('pincodeError').textContent = 'Pincode is required';
+                isValid = false;
+            } else if (!/^\d{6}$/.test(pincode)) {
+                document.getElementById('pincodeError').textContent = 'Must be exactly 6 digits';
+                isValid = false;
+            }
+
+            var landmark = document.getElementById('landmark').value.trim();
+            if (landmark.length > 50) {
+                document.getElementById('landmarkError').textContent = 'Maximum 50 characters allowed';
+                isValid = false;
+            }
+
+            var addressType = document.querySelector('input[name="addressType"]:checked');
+            if (!addressType) {
+                document.getElementById('addressTypeError').textContent = 'Address Type is required';
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert('Address Form submitted successfully!');
+            }
+            return false;
+        }
+    </script>
+</body>
+</html>
